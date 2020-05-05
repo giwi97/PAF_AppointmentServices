@@ -105,16 +105,17 @@ public class Appointment {
 				String description = rs.getString("description");
 				String datetime = rs.getString("datetime");
 
-				output += "<tr><td>" + hospitalID + "</td>";
+				output += "<tr><td><input id=\"hidAppoiIDUpdate\" name=\"hidAppoiIDUpdate\" type=\"hidden\" value= \""+appointmentID+"\"> </td>";
+				output += "<td>" + hospitalID + "</td>";
 				output += "<td>" + doctorID + "</td>";
 				output += "<td>" + patientID + "</td>";
 				output += "<td>" + description + "</td>";
 				output += "<td>" + datetime + "</td>";
 
 				output += "<td><input name = \"btnUpdate\" type = \"button\" value=\"Update\" class=\"btn btn-secondary\"> </td>"
-						+ "<td><form method = \"post\" action = \"appointments.jsp\">"
+						+ "<td><form method = \"post\" action = \"appointment.jsp\">"
 						+ "<input name = \"btnRemove\" type = \"submit\" value = \"Delete\" class = \"btn btn-danger\">"
-						+ "<input name = \"appointmentID\" type = \"hidden\" value = \"" + appointmentID + "\">"
+						+ "<input name = \"hidAppoiIDDelete\" type = \"hidden\" value = \"" + appointmentID + "\">"
 						+ "</form></td></tr>";
 
 			}
