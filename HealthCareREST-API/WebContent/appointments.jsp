@@ -1,46 +1,7 @@
 <%@page import="com.Appointment"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<% 
-	//Save---------------------------------
-	if (request.getParameter("hospitalID") != null)
-	{
-		Appointment appObj = new Appointment();
-		
-		String stsMsg = "";
-		//Insert--------------------------
-		if (request.getParameter("hidAppoiIDSave") == "")
-		{
-			stsMsg = appObj.setAppointment(request.getParameter("hospitalID"),
-			request.getParameter("doctorID"),
-			request.getParameter("patientID"),
-			request.getParameter("description"),
-			request.getParameter("datetime"));
-		}
-		else//Update----------------------
-		{
-			stsMsg = appObj.updateAppointment(request.getParameter("appointmentID"),
-			request.getParameter("hospitalID"),
-			request.getParameter("doctorID"),
-			request.getParameter("patientID"),
-			request.getParameter("description"),
-			request.getParameter("datetime"));
-		}
-	
-		session.setAttribute("statusMsg", stsMsg);
-
-	}
-
-	//Delete-----------------------------
-	if (request.getParameter("hidItemIDDelete") != null)
-	{
-		Appointment appObj = new Appointment();
-		String stsMsg =
-		appObj.deleteAppointment(request.getParameter("hidItemIDDelete"));
-		session.setAttribute("statusMsg", stsMsg);
-	}
-%>    
-    
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,20 +44,17 @@
 					 	<input type="hidden" id="hidAppoiIDSave" name="hidAppoiIDSave" value=""> 
 					</form>
 					
-					<div id="alertSuccess" class="alert alert-success">
-						
-						<% out.print(session.getAttribute("statusMsg")); %> 
-						
-					</div>  
+					<br>
+					<div id="alertSuccess" class="alert alert-success"></div>  
 					<div id="alertError" class = "alert alert-danger"></div> 
 					
 					<br>
-					
+					<div id="divItemsGrid">
 						<%    
 						Appointment appObj = new Appointment();
 						out.print(appObj.readAppointment());   
 						%>   
-					
+					</div>
 					
 			</div>
 		</div>
