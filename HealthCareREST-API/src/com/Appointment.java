@@ -11,7 +11,7 @@ import java.sql.Date;
 
 public class Appointment {
 
-	//Establishing database connection
+	// Establishing database connection
 	private Connection connect() {
 
 		Connection conn = null;
@@ -31,7 +31,7 @@ public class Appointment {
 		return conn;
 	}
 
-	//Inserting appointment
+	// Inserting appointment
 	public String setAppointment(String hospitalID, String doctorID, String patientID, String description,
 			String datetime) {
 
@@ -51,7 +51,6 @@ public class Appointment {
 					+ " VALUES (?, ?, ?, ?, ?)";
 
 			PreparedStatement ps = conn.prepareStatement(query);
-
 
 			ps.setString(1, hospitalID);
 			ps.setString(2, doctorID);
@@ -75,7 +74,7 @@ public class Appointment {
 
 	}
 
-	//retrieve all the details
+	// retrieve all the details
 	public String readAppointment() {
 
 		String output = "";
@@ -90,7 +89,7 @@ public class Appointment {
 
 			}
 
-			output = "<table border = \"1\"><tr><th>hospitalID</th><th>doctorID</th><th>patientID</th><th>description</th><th>datetime</th><th>Update</th><th>Delete</th></tr>";
+			output = "<table border = '1'><tr><th>hospitalID</th><th>doctorID</th><th>patientID</th><th>description</th><th>datetime</th><th>Update</th><th>Delete</th></tr>";
 
 			String query = "SELECT * FROM appointmentsTbl";
 			Statement st = conn.createStatement();
@@ -105,18 +104,17 @@ public class Appointment {
 				String description = rs.getString("description");
 				String datetime = rs.getString("datetime");
 
-				output += "<tr><td><input id=\"hidAppoiIDUpdate\" name=\"hidAppoiIDUpdate\" type=\"hidden\" value= \""+appointmentID+"\"> </td>";
+				output += "<tr><td><input id='hidAppoiIDUpdate' name='hidAppoiIDUpdate' type='hidden' value= '"
+						+ appointmentID + "'> </td>";
 				output += "<td>" + hospitalID + "</td>";
 				output += "<td>" + doctorID + "</td>";
 				output += "<td>" + patientID + "</td>";
 				output += "<td>" + description + "</td>";
 				output += "<td>" + datetime + "</td>";
 
-				output += "<td><input name = \"btnUpdate\" type = \"button\" value=\"Update\" class=\"btn btn-secondary\"> </td>"
-						+ "<td><form method = \"post\" action = \"appointment.jsp\">"
-						+ "<input name = \"btnRemove\" type = \"submit\" value = \"Delete\" class = \"btn btn-danger\">"
-						+ "<input name = \"hidAppoiIDDelete\" type = \"hidden\" value = \"" + appointmentID + "\">"
-						+ "</form></td></tr>";
+				output += "<td><input name = 'btnUpdate' type = 'button' value='Update' class='btn btn-secondary'> </td>"
+						+ "<td><input name = 'btnRemove' type = 'button' value = 'Delete' class = 'btnRemove btn btn-danger' data-intemid='"
+						+ appointmentID + "'>" + "</td></tr>";
 
 			}
 
@@ -135,8 +133,8 @@ public class Appointment {
 
 	}
 
-	//retrieving details according to appointment ID
-	
+	// retrieving details according to appointment ID
+
 	public String readAppointmentByID(String appointmentID) {
 
 		String output = "";
@@ -194,11 +192,11 @@ public class Appointment {
 		return output;
 
 	}
-	
-	//retrieving details according to Doctor ID
-	
+
+	// retrieving details according to Doctor ID
+
 	public String readAppointmentByDocID(String doctorID) {
-		
+
 		String output = "";
 
 		try {
@@ -250,13 +248,13 @@ public class Appointment {
 		}
 
 		return output;
-		
+
 	}
-	
-	//retrieving details according to hospital ID
-	
+
+	// retrieving details according to hospital ID
+
 	public String readAppointmentByHosID(String hospitalID) {
-		
+
 		String output = "";
 
 		try {
@@ -276,7 +274,7 @@ public class Appointment {
 			ResultSet rs = st.executeQuery(query);
 
 			while (rs.next()) {
-				
+
 				String hospitalID1 = rs.getString("hospitalID");
 				String doctorID = rs.getString("doctorID");
 				String patientID = rs.getString("patientID");
@@ -308,13 +306,13 @@ public class Appointment {
 		}
 
 		return output;
-		
+
 	}
-	
-	//retrieving details according to Patient ID
-	
+
+	// retrieving details according to Patient ID
+
 	public String readAppointmentByPatientID(String patientID) {
-		
+
 		String output = "";
 
 		try {
@@ -334,7 +332,7 @@ public class Appointment {
 			ResultSet rs = st.executeQuery(query);
 
 			while (rs.next()) {
-				
+
 				String patientID1 = rs.getString("patientID");
 				String hospitalID = rs.getString("hospitalID");
 				String doctorID = rs.getString("doctorID");
@@ -366,10 +364,10 @@ public class Appointment {
 		}
 
 		return output;
-		
+
 	}
 
-	//Update records
+	// Update records
 	public String updateAppointment(String appointmentID, String hospitalID, String doctorID, String patientID,
 			String description, String datetime) {
 
@@ -412,7 +410,7 @@ public class Appointment {
 
 	}
 
-	//Delete records
+	// Delete records
 	public String deleteAppointment(String appointmentID) {
 
 		String output = "";
