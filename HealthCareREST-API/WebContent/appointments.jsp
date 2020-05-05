@@ -6,6 +6,7 @@
 	if (request.getParameter("hospitalID") != null)
 	{
 		Appointment appObj = new Appointment();
+		
 		String stsMsg = "";
 		//Insert--------------------------
 		if (request.getParameter("hidAppoiIDSave") == "")
@@ -44,7 +45,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Appointment Service</title>
+<title>Appointment Services</title>
 
 <link rel="stylesheet" href="Views/bootstrap.min.css">
 <script src="Components/jquery-3.2.1.min.js"></script>
