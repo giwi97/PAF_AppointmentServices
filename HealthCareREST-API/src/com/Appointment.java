@@ -61,11 +61,14 @@ public class Appointment {
 			ps.execute();
 			conn.close();
 
+			String newAppointment = readAppointment();
+			output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";
+
 			output = "Insertion successful";
 
 		} catch (Exception e) {
 
-			output = "Insertion failed!!";
+			output = "{\"status\":\"error\", \"data\":\"Error while inserting\"}";
 			System.err.println(e.getMessage());
 
 		}
@@ -397,11 +400,12 @@ public class Appointment {
 			ps.execute();
 			conn.close();
 
-			output = "Updated successfully";
+			String newAppointment = readAppointment();
+			output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";
 
 		} catch (Exception e) {
 
-			output = "Error while updating..";
+			output = "{\"status\":\"error\", \"data\":\"Erro while updating\"}";
 			System.err.println(e.getMessage());
 
 		}
@@ -434,11 +438,12 @@ public class Appointment {
 			ps.execute();
 			conn.close();
 
-			output = "Deleted successfully";
+			String newAppointment = readAppointment();
+			output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";
 
 		} catch (Exception e) {
 
-			output = "Error while deleting";
+			output = "{\"status\":\"error\", \"data\":\"Error while deleting\"}";
 			System.err.println(e.getMessage());
 
 		}
