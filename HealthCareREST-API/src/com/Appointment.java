@@ -58,13 +58,14 @@ public class Appointment {
 			ps.setString(4, description);
 			ps.setDate(5, Date.valueOf(datetime));
 
-			ps.execute();
-			conn.close();
-
+			
+			  ps.execute(); 
+			  conn.close();
+			 
+			
 			String newAppointment = readAppointment();
 			output = "{\"status\":\"success\", \"data\": \"" + newAppointment + "\"}";
 
-			output = "Insertion successful";
 
 		} catch (Exception e) {
 
@@ -100,6 +101,7 @@ public class Appointment {
 
 			while (rs.next()) {
 
+				
 				String appointmentID = Integer.toString(rs.getInt("appointmentID"));
 				String hospitalID = rs.getString("hospitalID");
 				String doctorID = rs.getString("doctorID");
@@ -107,251 +109,14 @@ public class Appointment {
 				String description = rs.getString("description");
 				String datetime = rs.getString("datetime");
 
-				output += "<tr><td><input id='hidAppoiIDUpdate' name='hidAppoiIDUpdate' type='hidden' value= '"
-						+ appointmentID + "'> </td>";
-				output += "<td>" + hospitalID + "</td>";
+				output += "<tr><td><input id='hidAppoiIDUpdate' name='hidAppoiIDUpdate' type='hidden' value= '"+ appointmentID + "'>" + hospitalID + "</td>";
 				output += "<td>" + doctorID + "</td>";
 				output += "<td>" + patientID + "</td>";
 				output += "<td>" + description + "</td>";
 				output += "<td>" + datetime + "</td>";
 
-				output += "<td><input name = 'btnUpdate' type = 'button' value='Update' class='btn btn-secondary'> </td>"
-						+ "<td><input name = 'btnRemove' type = 'button' value = 'Delete' class = 'btnRemove btn btn-danger' data-intemid='"
-						+ appointmentID + "'>" + "</td></tr>";
-
-			}
-
-			conn.close();
-
-			output += "</table>";
-
-		} catch (Exception e) {
-
-			output = "Error while retrieving";
-			System.err.println(e.getMessage());
-
-		}
-
-		return output;
-
-	}
-
-	// retrieving details according to appointment ID
-
-	public String readAppointmentByID(String appointmentID) {
-
-		String output = "";
-
-		try {
-
-			Connection conn = connect();
-
-			if (conn == null) {
-
-				return "Connection failed";
-
-			}
-
-			output = "<table border = \"1\"><tr><th>hospitalID</th><th>doctorID</th><th>patientID</th><th>description</th><th>datetime</th><th>Update</th><th>Delete</th></tr>";
-
-			String query = "SELECT * FROM appointmentsTbl WHERE appointmentID = '" + appointmentID + "'";
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(query);
-
-			while (rs.next()) {
-
-				String appointmentID1 = Integer.toString(rs.getInt("appointmentID"));
-				String hospitalID = rs.getString("hospitalID");
-				String doctorID = rs.getString("doctorID");
-				String patientID = rs.getString("patientID");
-				String description = rs.getString("description");
-				String datetime = rs.getString("datetime");
-
-				output += "<tr><td>" + hospitalID + "</td>";
-				output += "<td>" + doctorID + "</td>";
-				output += "<td>" + patientID + "</td>";
-				output += "<td>" + description + "</td>";
-				output += "<td>" + datetime + "</td>";
-
-				output += "<td><input name = \"btnUpdate\" type = \"button\" value=\"Update\" class=\"btn btn-secondary\"> </td>"
-						+ "<td><form method = \"post\" action = \"appointments.jsp\">"
-						+ "<input name = \"btnRemove\" type = \"submit\" value = \"Delete\" class = \"btn btn-danger\">"
-						+ "<input name = \"appointmentID\" type = \"hidden\" value = \"" + appointmentID1 + "\">"
-						+ "</form></td></tr>";
-
-			}
-
-			conn.close();
-
-			output += "</table>";
-
-		} catch (Exception e) {
-
-			output = "Error while retrieving";
-			System.err.println(e.getMessage());
-
-		}
-
-		return output;
-
-	}
-
-	// retrieving details according to Doctor ID
-
-	public String readAppointmentByDocID(String doctorID) {
-
-		String output = "";
-
-		try {
-
-			Connection conn = connect();
-
-			if (conn == null) {
-
-				return "Connection failed";
-
-			}
-
-			output = "<table border = \"1\"><tr><th>hospitalID</th><th>patientID</th><th>description</th><th>datetime</th><th>Update</th><th>Delete</th></tr>";
-
-			String query = "SELECT * FROM appointmentsTbl WHERE doctorID = '" + doctorID + "'";
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(query);
-
-			while (rs.next()) {
-
-				String doctorID1 = rs.getString("doctorID");
-				String hospitalID = rs.getString("hospitalID");
-				String patientID = rs.getString("patientID");
-				String description = rs.getString("description");
-				String datetime = rs.getString("datetime");
-
-				output += "<tr><td>" + hospitalID + "</td>";
-				output += "<td>" + patientID + "</td>";
-				output += "<td>" + description + "</td>";
-				output += "<td>" + datetime + "</td>";
-
-				output += "<td><input name = \"btnUpdate\" type = \"button\" value=\"Update\" class=\"btn btn-secondary\"> </td>"
-						+ "<td><form method = \"post\" action = \"appointments.jsp\">"
-						+ "<input name = \"btnRemove\" type = \"submit\" value = \"Delete\" class = \"btn btn-danger\">"
-						+ "<input name = \"appointmentID\" type = \"hidden\" value = \"" + doctorID1 + "\">"
-						+ "</form></td></tr>";
-
-			}
-
-			conn.close();
-
-			output += "</table>";
-
-		} catch (Exception e) {
-
-			output = "Error while retrieving";
-			System.err.println(e.getMessage());
-
-		}
-
-		return output;
-
-	}
-
-	// retrieving details according to hospital ID
-
-	public String readAppointmentByHosID(String hospitalID) {
-
-		String output = "";
-
-		try {
-
-			Connection conn = connect();
-
-			if (conn == null) {
-
-				return "Connection failed";
-
-			}
-
-			output = "<table border = \"1\"><tr><th>doctorID</th><th>patientID</th><th>description</th><th>datetime</th><th>Update</th><th>Delete</th></tr>";
-
-			String query = "SELECT * FROM appointmentsTbl WHERE hospitalID = '" + hospitalID + "'";
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(query);
-
-			while (rs.next()) {
-
-				String hospitalID1 = rs.getString("hospitalID");
-				String doctorID = rs.getString("doctorID");
-				String patientID = rs.getString("patientID");
-				String description = rs.getString("description");
-				String datetime = rs.getString("datetime");
-
-				output += "<tr><td>" + doctorID + "</td>";
-				output += "<td>" + patientID + "</td>";
-				output += "<td>" + description + "</td>";
-				output += "<td>" + datetime + "</td>";
-
-				output += "<td><input name = \"btnUpdate\" type = \"button\" value=\"Update\" class=\"btn btn-secondary\"> </td>"
-						+ "<td><form method = \"post\" action = \"appointments.jsp\">"
-						+ "<input name = \"btnRemove\" type = \"submit\" value = \"Delete\" class = \"btn btn-danger\">"
-						+ "<input name = \"appointmentID\" type = \"hidden\" value = \"" + hospitalID1 + "\">"
-						+ "</form></td></tr>";
-
-			}
-
-			conn.close();
-
-			output += "</table>";
-
-		} catch (Exception e) {
-
-			output = "Error while retrieving";
-			System.err.println(e.getMessage());
-
-		}
-
-		return output;
-
-	}
-
-	// retrieving details according to Patient ID
-
-	public String readAppointmentByPatientID(String patientID) {
-
-		String output = "";
-
-		try {
-
-			Connection conn = connect();
-
-			if (conn == null) {
-
-				return "Connection failed";
-
-			}
-
-			output = "<table border = \"1\"><tr><th>hospitalID</th><th>doctorID</th><th>description</th><th>datetime</th><th>Update</th><th>Delete</th></tr>";
-
-			String query = "SELECT * FROM appointmentsTbl WHERE patientID = '" + patientID + "'";
-			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery(query);
-
-			while (rs.next()) {
-
-				String patientID1 = rs.getString("patientID");
-				String hospitalID = rs.getString("hospitalID");
-				String doctorID = rs.getString("doctorID");
-				String description = rs.getString("description");
-				String datetime = rs.getString("datetime");
-
-				output += "<tr><td>" + hospitalID + "</td>";
-				output += "<td>" + doctorID + "</td>";
-				output += "<td>" + description + "</td>";
-				output += "<td>" + datetime + "</td>";
-
-				output += "<td><input name = \"btnUpdate\" type = \"button\" value=\"Update\" class=\"btn btn-secondary\"> </td>"
-						+ "<td><form method = \"post\" action = \"appointments.jsp\">"
-						+ "<input name = \"btnRemove\" type = \"submit\" value = \"Delete\" class = \"btn btn-danger\">"
-						+ "<input name = \"appointmentID\" type = \"hidden\" value = \"" + patientID1 + "\">"
-						+ "</form></td></tr>";
+				output += "<td><input name = 'btnUpdate' type = 'button' value='Update' class='btnUpdate btn btn-secondary'> </td>"
+						+ "<td><input name = 'btnRemove' type = 'button' value = 'Delete' class = 'btnRemove btn btn-danger' data-intemid='"+ appointmentID + "'>" + "</td></tr>";
 
 			}
 
@@ -405,7 +170,7 @@ public class Appointment {
 
 		} catch (Exception e) {
 
-			output = "{\"status\":\"error\", \"data\":\"Erro while updating\"}";
+			output = "{\"status\":\"error\", \"data\":\"Error while updating\"}";
 			System.err.println(e.getMessage());
 
 		}
