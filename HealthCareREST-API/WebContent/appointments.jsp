@@ -19,7 +19,8 @@
 		
 			<div class="col-8">       
 				<h1 class="m-3">Appointment Service</h1>
-					<form id="formAppointment" name="formAppointment" method="post" action="appointments.jsp">
+				
+					<form id="formAppointment" name="formAppointment">
 						Hospital ID:  
 						<input id="hospitalID" name="hospitalID" type="text" class="form-control form-control-sm">  
 					
