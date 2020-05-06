@@ -1,11 +1,12 @@
 $(document).ready(function()
 {
-	if ($("#alertSuccess").text().trim() == "")
-	{
+
+	if ($("#alertSuccess").text().trim() == "") {
 		$("#alertSuccess").hide();
 	}
 	$("#alertError").hide();
-	});
+	
+});
 
 // SAVE ============================================
 $(document).on("click", "#btnSave", function(event)
@@ -30,7 +31,7 @@ $(document).on("click", "#btnSave", function(event)
 	$.ajax(
 			{
 				url : "AppointmentAPI",
-				type : t,
+				type : type,
 				data : $("#formAppointment").serialize(),
 				dataType : "text",
 				complete : function(response, status)
@@ -87,7 +88,7 @@ $(document).on("click", ".btnRemove", function(event)
 		 {
 			 url : "AppointmentAPI",
 			 type : "DELETE",
-			 data : "appointmentID=" + $(this).data("appointmentID"),
+			 data : "appointmentID=" + $(this).data("intemid"),
 			 dataType : "text",
 			 complete : function(response, status)
 			 {
@@ -166,14 +167,7 @@ function validateAppointmentForm()
 	{
 		return "Insert Patient ID.";
 	}
-/*	// is numerical value
-	var tmpPrice = $("#itemPrice").val().trim();
-	if (!$.isNumeric(tmpPrice))
-	{
-		return "Insert a numerical value for Item Price.";
-	}
-	// convert to decimal price
-	$("#itemPrice").val(parseFloat(tmpPrice).toFixed(2));*/
+
 	// DESCRIPTION------------------------
 	if ($("#description").val().trim() == "")
 	{
@@ -184,4 +178,6 @@ function validateAppointmentForm()
 	{
 		return "Insert Date.";
 	}
+	
+	return true;
 }
