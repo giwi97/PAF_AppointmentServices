@@ -50,10 +50,12 @@
 					
 					<br>
 					<div id="divAppointmentGrid">
+						
 						<%    
 						Appointment appObj = new Appointment();
 						out.print(appObj.readAppointment());   
-						%>   
+						%>
+						   
 					</div>
 					
 			</div>
