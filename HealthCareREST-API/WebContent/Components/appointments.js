@@ -25,8 +25,80 @@ $(document).on("click", "#btnSave", function(event)
 		return;
 	}
 // If valid------------------------
-	$("#formAppointment").submit();
+	var type = ($("#hidAppoiIDSave").val() == "") ? "POST" : "PUT";
+	
+	$.ajax(
+			{
+				url : "AppointmentAPI",
+				type : t,
+				data : $("#formAppointment").serialize(),
+				dataType : "text",
+				complete : function(response, status)
+				{
+					onAppointmentSaveComplete(response.responseText, status);
+				}
+			});
+	
 });
+
+
+function onAppointmentSaveComplete(response, status)
+{
+	if (status == "success")
+	{
+		var resultSet = JSON.parse(response);
+		
+		if (resultSet.status.trim() == "success")
+		{
+			
+			$("#alertSuccess").text("Successfully saved.");
+			$("#alertSuccess").show();
+			$("#divAppointmentGrid").html(resultSet.data);
+			
+		} else if (resultSet.status.trim() == "error")
+		{
+			
+			$("#alertError").text(resultSet.data);
+			$("#alertError").show();
+			
+		}
+	} else if (status == "error")
+	{
+		
+		$("#alertError").text("Error while saving.");
+		$("#alertError").show();
+	
+	} else
+	{
+		
+		$("#alertError").text("Unknown error while saving..");
+		$("#alertError").show();
+	
+	}
+	
+	$("#hidAppoiIDSave").val("");
+	$("#formAppointment")[0].reset();
+
+}
+
+$(document).on("click", ".btnRemove", function(event)
+{
+		 $.ajax(
+		 {
+			 url : "AppointmentAPI",
+			 type : "DELETE",
+			 data : "appointmentID=" + $(this).data("appointmentID"),
+			 dataType : "text",
+			 complete : function(response, status)
+			 {
+				 
+				 onAppointmentDeleteComplete(response.responseText, status);
+			 
+			 }
+		 
+		 });
+});
+
 // UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
@@ -37,6 +109,45 @@ $(document).on("click", ".btnUpdate", function(event)
 	$("#description").val($(this).closest("tr").find('td:eq(3)').text());
 	$("#datetime").val($(this).closest("tr").find('td:eq(4)').text());
 });
+
+
+function onAppointmentDeleteComplete(response, status)
+{
+	if (status == "success")
+	{
+		
+		var resultSet = JSON.parse(response);
+		if (resultSet.status.trim() == "success")
+		
+		{
+			
+			$("#alertSuccess").text("Successfully deleted.");
+			$("#alertSuccess").show();
+			$("#divAppointmentGrid").html(resultSet.data);
+		
+		} else if (resultSet.status.trim() == "error")
+		{
+			
+			$("#alertError").text(resultSet.data);
+			$("#alertError").show();
+		
+		}
+	} else if (status == "error")
+	{
+		
+		$("#alertError").text("Error while deleting.");
+		$("#alertError").show();
+	
+	} else
+	{
+		
+		$("#alertError").text("Unknown error while deleting..");
+		$("#alertError").show();
+	
+	}
+}
+
+
 // CLIENTMODEL=========================================================================
 function validateAppointmentForm()
 {
